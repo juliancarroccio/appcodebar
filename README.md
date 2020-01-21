@@ -1,5 +1,5 @@
-# appcodebar
-Aplicació para Android que escanea código de barras y muestra el producto y el stock obtenido
+# APP lectora de Codigo de Barras
+Aplicación para Android que escanea código de barras y muestra el producto y el stock obtenido
 
 # Tecnologías a usar:
 - Flutter para Frontend
