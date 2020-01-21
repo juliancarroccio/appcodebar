@@ -14,3 +14,6 @@ Aplicación para Android que escanea código de barras y muestra el producto y e
 
 # Librerías Externas
 - Zbar y Zxing
+
+# Despliegue
+(completar)
