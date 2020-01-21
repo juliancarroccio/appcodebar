@@ -1,0 +1,15 @@
+{
+  "name": "api-rest-productos",
+  "version": "1.0.0",
+  "description": "Proyecto Scanner Codigo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julian Carroccio",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
