@@ -30,21 +30,50 @@ app.route('/prenda').get(function (req, res) {
   codigo: 200,
   mensaje: ''
  };
- if(prenda.nombre === '' || prenda.stock === '' || prenda.codigoBarras === '') {
-  respuesta = {
-   error: true,
-   codigo: 501,
-   mensaje: 'La prenda no ha sido creada'
-  };
- } else {
-  respuesta = {
-   error: false,
-   codigo: 200,
-   mensaje: 'respuesta de la prenda',
-   respuesta: prenda
-  };
- }
- res.send(respuesta);
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+   host: 'localhost',
+   user: 'root',
+   password: 'root',
+   database: 'dbappscanner',
+   port: 3306
+});
+connection.connect(function(error){
+   if(error){
+      throw error;
+   }else{
+      console.log('Conexion correcta.');
+   }
+});
+console.log('request que puse:' + req.body.codigoBarras)
+var query = connection.query('SELECT * FROM producto WHERE codigoBarra = ?', req.body.codigoBarras, function(error, result){
+  if(error){
+     throw error;
+  }else{
+     var resultado = result;
+     if(resultado.length > 0){
+       prenda.nombre = resultado[0].descripcion_producto;
+       prenda.stock = resultado[0].stock;
+       prenda.codigoBarras = resultado[0].codigoBarra;
+       respuesta = {
+          error: false,
+          codigo: 200,
+          mensaje: 'Prenda Encontrada',
+          respuesta: prenda
+         };
+     }else{
+      respuesta = {
+        error: true,
+        codigo: 501,
+        mensaje: 'Prenda no encontrada'
+       };
+     }
+  }
+  res.send(respuesta);
+}
+);
+ 
+ connection.end();
 })
 .post(function (req, res) {
  if(!req.body.nombre || !req.body.stock || !req.body.codigoBarras) {
