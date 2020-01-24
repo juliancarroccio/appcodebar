@@ -1,3 +1,5 @@
+[![Build Status](http://localhost:8080/job/appScanner/badge/icon)](http://localhost:8080/job/appScanner/)
+
 # APP lectora de Codigo de Barras
 Aplicación para Android que escanea código de barras y muestra el producto y el stock obtenido
 
