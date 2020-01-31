@@ -9,7 +9,10 @@ let prenda = {
    nombre: '',
    stock: '',
    codigoBarras: '',
-   marca: ''
+   marca: '',
+   color: '',
+   talle: '',
+   familia: ''
 };
 let respuesta = {
    error: false,
@@ -41,11 +44,14 @@ app.get('/', function (req, res) {
             "nombre": "",
             "stock": ,
             "codigoBarras": ,
-            "marca": ""
+            "marca": "",
+            "color": "",
+            "talle": "",
+            "familia": ""
         }
 */
 app.route('/prenda').post(function (req, res) {
-   respuesta = {
+   /*respuesta = {
       error: false,
       codigo: 200,
       mensaje: ''
@@ -65,7 +71,7 @@ app.route('/prenda').post(function (req, res) {
          console.log('Conexion correcta.');
       }
    });
-   var query = connection.query('INSERT INTO producto VALUES (?,?,?,?,?,'?',?,?,?)', req.body.nombre,  function (error, result) {
+   var query = connection.query('INSERT INTO producto VALUES (?,?,?,?,?,'?',?,?,?)',req.body.nombre,1,1,1,1,1,1,1,1,  function (error, result) {
       if (error) {
          throw error;
       } else {
@@ -93,11 +99,11 @@ app.route('/prenda').post(function (req, res) {
       res.send(respuesta);
    }
    );
-   connection.end();
+   connection.end();*/
 })
    /*
    * GET que recibe todas las prendas existentes en el inventario si no se envia parámetros
-   * parámetros = codigoBarras : recibe el producto con el codigo de barras pasado por parametro 
+   * parámetros = codigoBarras : recibe los productos cuya familia sea igual al codigo de barras pasado por parametro 
    * endpoint: /prenda
    */
    .get(function (req, res, next) {
@@ -122,85 +128,106 @@ app.route('/prenda').post(function (req, res) {
          }
       });
       if (req.query.codigoBarras == null) {
-         var query = connection.query('SELECT * FROM producto JOIN marca ON marca.id_marca = producto.id_producto', function (error, result) {
-            if (error) {
-               throw error;
-            } else {
-               var resultado = result;
-               if (resultado.length > 0) {
-                  let aux = [];
-                  for (var i = 0; i < resultado.length; i++) {
-                     let prendaaux = {
-                        nombre: '',
-                        stock: '',
-                        codigoBarras: '',
-                        marca: ''
-                     };
-                     prendaaux.nombre = resultado[i].descripcion_producto;
-                     prendaaux.stock = resultado[i].stock;
-                     prendaaux.codigoBarras = resultado[i].codigoBarra;
-                     prendaaux.marca = resultado[i].descripcion;
-                     aux[i] = prendaaux
-                  }
-                  respuesta = {
-                     error: false,
-                     codigo: 200,
-                     mensaje: 'Prendas Encontradas',
-                     respuesta: aux
-                  };
+         var query = connection.query('SELECT * FROM producto ' +
+            'JOIN marca ON marca.id_marca = producto.id_producto ' +
+            'JOIN color ON color.id_color = producto.id_color ' +
+            'JOIN talle ON talle.id_talle = producto.id_talle ' +
+            'JOIN familia ON familia.id_familia = producto.id_familia', function (error, result) {
+               if (error) {
+                  throw error;
                } else {
-                  res.status(400);
-                  respuesta = {
-                     error: true,
-                     codigo: 400,
-                     mensaje: 'Sin Pendas Cargadas en Inventario'
-                  };
-               }
+                  var resultado = result;
+                  if (resultado.length > 0) {
+                     let aux = [];
+                     for (var i = 0; i < resultado.length; i++) {
+                        let prendaaux = {
+                           nombre: '',
+                           stock: '',
+                           codigoBarras: '',
+                           marca: '',
+                           color: '',
+                           talle: '',
+                           familia: ''
+                        };
+                        prendaaux.nombre = resultado[i].descripcion_producto;
+                        prendaaux.stock = resultado[i].stock;
+                        prendaaux.codigoBarras = resultado[i].codigoBarra;
+                        prendaaux.marca = resultado[i].descripcion_marca;
+                        prendaaux.color = resultado[i].descripcion_color;
+                        prendaaux.talle = resultado[i].descripcion_talle;
+                        prendaaux.familia = resultado[i].descripcion_familia;
+                        aux[i] = prendaaux
+                     }
+                     respuesta = {
+                        error: false,
+                        codigo: 200,
+                        mensaje: 'Prendas Encontradas',
+                        respuesta: aux
+                     };
+                  } else {
+                     res.status(400);
+                     respuesta = {
+                        error: true,
+                        codigo: 400,
+                        mensaje: 'Sin Pendas Cargadas en Inventario'
+                     };
+                  }
 
+               }
+               res.send(respuesta);
             }
-            res.send(respuesta);
-         }
          );
       }
       else {
-         var query = connection.query('SELECT * FROM producto JOIN marca ON marca.id_marca = producto.id_producto where codigoBarra = ?', req.query.codigoBarras, function (error, result) {
-            if (error) {
-               throw error;
-            } else {
-               var resultado = result;
-               if (resultado.length > 0) {
-                  let aux = [];
-                  for (var i = 0; i < resultado.length; i++) {
-                     let prendaaux = {
-                        nombre: '',
-                        stock: '',
-                        codigoBarras: '',
-                        marca: ''
-                     };
-                     prendaaux.nombre = resultado[i].descripcion_producto;
-                     prendaaux.stock = resultado[i].stock;
-                     prendaaux.codigoBarras = resultado[i].codigoBarra;
-                     prendaaux.marca = resultado[i].descripcion;
-                     aux[i] = prendaaux
-                  }
-                  respuesta = {
-                     error: false,
-                     codigo: 200,
-                     mensaje: 'Prendas Encontradas',
-                     respuesta: aux
-                  };
+         var query = connection.query('SELECT * FROM producto ' +
+            'JOIN marca ON marca.id_marca = producto.id_producto ' +
+            'JOIN color ON color.id_color = producto.id_color ' +
+            'JOIN talle ON talle.id_talle = producto.id_talle ' +
+            'JOIN familia  f ON f.id_familia = producto.id_familia ' +
+            'WHERE f.id_familia = (SELECT id_familia FROM producto WHERE codigoBarra = ?)', req.query.codigoBarras, function (error, result) {
+               if (error) {
+                  throw error;
                } else {
-                  res.status(400);
-                  respuesta = {
-                     error: true,
-                     codigo: 400,
-                     mensaje: 'Sin Pendas Cargadas en Inventario'
-                  };
-               }
+                  var resultado = result;
+                  if (resultado.length > 0) {
+                     let aux = [];
+                     for (var i = 0; i < resultado.length; i++) {
+                        let prendaaux = {
+                           nombre: '',
+                           stock: '',
+                           codigoBarras: '',
+                           marca: '',
+                           color: '',
+                           talle: '',
+                           familia: ''
+                        };
+                        prendaaux.nombre = resultado[i].descripcion_producto;
+                        prendaaux.stock = resultado[i].stock;
+                        prendaaux.codigoBarras = resultado[i].codigoBarra;
+                        prendaaux.marca = resultado[i].descripcion_marca;
+                        prendaaux.color = resultado[i].descripcion_color;
+                        prendaaux.talle = resultado[i].descripcion_talle;
+                        prendaaux.familia = resultado[i].descripcion_familia;
+                        aux[i] = prendaaux
+                     }
+                     respuesta = {
+                        error: false,
+                        codigo: 200,
+                        mensaje: 'Prendas Encontradas',
+                        respuesta: aux
+                     };
+                  } else {
+                     res.status(400);
+                     respuesta = {
+                        error: true,
+                        codigo: 400,
+                        mensaje: 'Sin Pendas Cargadas en Inventario'
+                     };
+                  }
 
+               }
+               res.send(respuesta);
             }
-            res.send(respuesta);
-         }
          );
       }
       connection.end();

@@ -4,7 +4,7 @@
   "description": "Proyecto Scanner Codigo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js --reporter mocha-junit-reporter --timeout 60000 --exit"
   },
   "author": "Julian Carroccio",
   "license": "MIT",
