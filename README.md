@@ -19,3 +19,10 @@ Aplicación para Android que escanea código de barras y muestra el producto y e
 
 # Despliegue
 (completar)
+
+# To Do List
+- Post
+- Put
+- Delete
+- Actualizar Swagger
+- Pruebas con Mocha

@@ -184,7 +184,7 @@ app.route('/prenda').post(function (req, res) {
             'JOIN color ON color.id_color = producto.id_color ' +
             'JOIN talle ON talle.id_talle = producto.id_talle ' +
             'JOIN familia  f ON f.id_familia = producto.id_familia ' +
-            'WHERE f.id_familia = (SELECT id_familia FROM producto WHERE codigoBarra = ?)', req.query.codigoBarras, function (error, result) {
+            'WHERE producto.stock > 0 AND f.id_familia = (SELECT id_familia FROM producto WHERE codigoBarra = ?)', req.query.codigoBarras, function (error, result) {
                if (error) {
                   throw error;
                } else {
@@ -221,7 +221,7 @@ app.route('/prenda').post(function (req, res) {
                      respuesta = {
                         error: true,
                         codigo: 400,
-                        mensaje: 'Sin Pendas Cargadas en Inventario'
+                        mensaje: 'Sin stock de Producto y familias'
                      };
                   }
 
