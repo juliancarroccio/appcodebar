@@ -41,10 +41,11 @@ describe('Prueba GET: ', () => {
                 expect(res).to.have.status(200);
                 done();
             });
+            con.end();
     });
     it('Obtiene todas las prendas de su familia', (done) => {
         chai.request(url)
-        
+
             .get('/prenda?codigoBarras=9119321')
             .end(function (err, res) {
                 var mysql = require('mysql');
@@ -69,7 +70,7 @@ describe('Prueba GET: ', () => {
     });
     it('No Obtiene prendas con Stock Cero', (done) => {
         chai.request(url)
-        
+
             .get('/prenda?codigoBarras=9113245')
             .end(function (err, res) {
                 var mysql = require('mysql');
@@ -94,7 +95,7 @@ describe('Prueba GET: ', () => {
     });
 });
 describe('Prueba POST: ', () => {
-    
+
     it('Obtiene status 200 OK', (done) => {
         chai.request(url)
             .get('/prenda')
@@ -108,7 +109,7 @@ describe('Prueba POST: ', () => {
 });
 
 describe('Prueba PUT: ', () => {
-    
+
     it('Obtiene status 200 OK', (done) => {
         chai.request(url)
             .get('/prenda')
@@ -122,7 +123,7 @@ describe('Prueba PUT: ', () => {
 });
 
 describe('Prueba DELETE: ', () => {
-    
+
     it('Obtiene status 200 OK', (done) => {
         chai.request(url)
             .get('/prenda')
