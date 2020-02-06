@@ -4,6 +4,7 @@
   "description": "Proyecto Scanner Codigo",
   "main": "index.js",
   "scripts": {
+    "start": "src/node index.js",
     "test": "mocha test.js --reporter mocha-junit-reporter --timeout 60000 --exit"
   },
   "author": "Julian Carroccio",

@@ -26,3 +26,4 @@ Aplicación para Android que escanea código de barras y muestra el producto y e
 - Delete
 - Actualizar Swagger
 - Pruebas con Mocha
+- Refactor código + comentar con parámetros
