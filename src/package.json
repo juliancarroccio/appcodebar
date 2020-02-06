@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "src/node index.js",
+    "dev": "nodemon src/index.js",
     "test": "mocha test.js --reporter mocha-junit-reporter --timeout 60000 --exit"
   },
   "author": "Julian Carroccio",
@@ -18,6 +19,7 @@
     "mysql": "^2.18.0"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "nodemon": "^2.0.2"
   }
 }

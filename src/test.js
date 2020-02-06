@@ -69,7 +69,7 @@ describe("Prueba GET: ", () => {
             expect(res.body)
               .to.have.property("mensaje")
               .to.be.equal("Sin stock de productos o Producto no válido");
-              var resultado = result;
+            var resultado = result;
             expect(resultado.length).to.equal(0);
           }
         );
@@ -99,20 +99,14 @@ describe("Prueba GET: ", () => {
   });
 
   it("Prueba en BD vacía", done => {
-    
-      con.query(
-        "DELETE from producto",
-        function(err, result, fields) {
-          if (err) throw err;
-        }
-      );
-
+    con.query("DELETE from producto", function(err, result, fields) {
+      if (err) throw err;
+    });
 
     chai
       .request(url)
       .get("/prenda")
       .end(function a(err, res) {
-
         expect(res.body)
           .to.have.property("mensaje")
           .to.be.equal("Sin Pendas Cargadas en Inventario");
@@ -164,6 +158,24 @@ describe("Prueba DELETE: ", () => {
       .get("/prenda")
       .end(function(err, res) {
         expect(res).to.have.status(200);
+        done();
+      });
+  });
+});
+
+describe("Pruebas Varias: ", () => {
+  it("URL invalida", done => {
+    chai
+      .request(url)
+      .get("/pathinvalido")
+      .end(function(err, res) {
+        expect(res).to.have.status(404);
+        expect(res.body)
+          .to.have.property("mensaje")
+          .to.be.equal("URL no encontrada");
+        expect(res.body)
+          .to.have.property("error")
+          .to.be.equal(true);
         done();
       });
   });
