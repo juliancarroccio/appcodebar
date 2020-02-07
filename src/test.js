@@ -12,7 +12,7 @@ describe("Prueba GET: ", () => {
   it("Obtiene status 200 OK", done => {
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function(err, res) {
         expect(res).to.have.status(200);
         done();
@@ -22,7 +22,7 @@ describe("Prueba GET: ", () => {
   it("Obtiene todas las prendas en BD", done => {
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function(err, res) {
         con.query("SELECT * FROM producto", function(err, result, fields) {
           if (err) throw err;
@@ -39,7 +39,7 @@ describe("Prueba GET: ", () => {
   it("Obtiene todas las prendas de su familia", done => {
     chai
       .request(url)
-      .get("/prenda?codigoBarras=9113245")
+      .get("/v1/prenda/obtener?codigoBarras=9113245")
       .end(function(err, res) {
         if (err) throw err;
         con.query(
@@ -59,7 +59,7 @@ describe("Prueba GET: ", () => {
   it("Busca Codigo de Barras Inexistente", done => {
     chai
       .request(url)
-      .get("/prenda?codigoBarras=911324554445")
+      .get("/v1/prenda/obtener?codigoBarras=911324554445")
       .end(function(err, res) {
         if (err) throw err;
         con.query(
@@ -81,7 +81,7 @@ describe("Prueba GET: ", () => {
   it("No Obtiene prendas con Stock Cero", done => {
     chai
       .request(url)
-      .get("/prenda?codigoBarras=9119321")
+      .get("/v1/prenda/obtener?codigoBarras=9119321")
       .end(function(err, res) {
         if (err) throw err;
         con.query(
@@ -105,7 +105,7 @@ describe("Prueba GET: ", () => {
 
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function a(err, res) {
         expect(res.body)
           .to.have.property("mensaje")
@@ -131,7 +131,7 @@ describe("Prueba POST: ", () => {
   it("Obtiene status 200 OK", done => {
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function(err, res) {
         expect(res).to.have.status(200);
         done();
@@ -143,7 +143,7 @@ describe("Prueba PUT: ", () => {
   it("Obtiene status 200 OK", done => {
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function(err, res) {
         expect(res).to.have.status(200);
         done();
@@ -155,7 +155,7 @@ describe("Prueba DELETE: ", () => {
   it("Obtiene status 200 OK", done => {
     chai
       .request(url)
-      .get("/prenda")
+      .get("/v1/prenda/obtener")
       .end(function(err, res) {
         expect(res).to.have.status(200);
         done();
@@ -167,7 +167,7 @@ describe("Pruebas Varias: ", () => {
   it("URL invalida", done => {
     chai
       .request(url)
-      .get("/pathinvalido")
+      .get("/v1/prenda/pathinvalido")
       .end(function(err, res) {
         expect(res).to.have.status(404);
         expect(res.body)
