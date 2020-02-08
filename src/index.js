@@ -1,9 +1,12 @@
 //modules required
 const express = require("express");
-const routesV1 = require("./routes/V1")
-//const routes = require("./routes");
 const bodyParser = require("body-parser");
+const routesV1 = require("./routes/V1")
 const blocks = require("./modules/blocks");
+const dotenv = require("dotenv");
+
+//init eviroment variables and express app
+dotenv.config();
 const app = express();
 
 //express definitions
@@ -17,9 +20,8 @@ let { respuesta, prenda, esquema } = blocks.defineBlocks();
  * API's Documentation in https://app.swaggerhub.com/apis/juliancarroccio4/crudPrendas/1.0.0#/prenda
  */
 routesV1(app);
-//routes(app);
 
 //Listen del puerto
-app.listen(3000, () => {
+app.listen(process.env.APPPORT, () => {
   console.log("El servidor está inicializado en el puerto 3000");
 });

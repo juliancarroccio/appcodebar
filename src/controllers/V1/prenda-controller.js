@@ -133,8 +133,22 @@ const createPrenda = (req,res)=>{
       //validación del request
       var v = new Validator();
       var valid = v.validate(req.body, esquemaPOST);
-      console.log(valid);
+      console.log(valid.errors)
+      if(!valid.errors){
 
+            ///CODIGO POST ACA
+
+
+      }
+      else{
+        //Error en validación
+        res.status(400);
+        respuesta = {
+            error: true,
+            codigo: 400,
+            mensaje: valid.errors
+          };
+        }
 
       /* var connection = conectar.conectarConBD();
      
@@ -167,6 +181,7 @@ const createPrenda = (req,res)=>{
      }
      );
      connection.end();*/
+     res.send(respuesta);
 };
 
 const deletePrenda = (req,res)=>{

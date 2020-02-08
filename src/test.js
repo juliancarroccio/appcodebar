@@ -2,12 +2,16 @@ let chai = require("chai");
 let chaiHttp = require("chai-http");
 const expect = require("chai").expect;
 const conectar = require("./modules/conexion");
+const dotenv = require("dotenv");
 
+dotenv.config();
 chai.use(chaiHttp);
-const url = "http://localhost:3000";
+const url = "http://localhost:3000"
+
+var con = conectar.conectarConBD();
+
 
 describe("Prueba GET: ", () => {
-  var con = conectar.conectarConBD();
 
   it("Obtiene status 200 OK", done => {
     chai
@@ -126,7 +130,7 @@ describe("Prueba GET: ", () => {
       });
   });
 });
-//
+
 describe("Prueba POST: ", () => {
   it("Obtiene status 200 OK", done => {
     chai
@@ -180,3 +184,4 @@ describe("Pruebas Varias: ", () => {
       });
   });
 });
+

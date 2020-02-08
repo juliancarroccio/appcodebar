@@ -1,11 +1,11 @@
 function conectarConBD() {
     var mysql = require("mysql");
     var connection = mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "root",
-       database: "dbappscanner",
-       port: 3306
+       host: process.env.MYSQLHOST,
+       user: process.env.MYSQLUSER,
+       password: process.env.MYSQLPASSWORD,
+       database: process.env.MYSQLDATABASE,
+       port: process.env.MYSQLPORT
     });
     connection.connect(function (error) {
        if (error) {
