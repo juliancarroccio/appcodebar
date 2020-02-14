@@ -13,7 +13,7 @@ function defineBlocks() {
     let respuesta = {
       error: false,
       codigo: 200,
-      mensaje: ""
+      mensaje: "",
     };
 
     var esquemaPOST = {

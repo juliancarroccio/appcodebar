@@ -4,9 +4,11 @@ const expect = require("chai").expect;
 const conectar = require("./modules/conexion");
 const dotenv = require("dotenv");
 
-dotenv.config();
+var enviromentVariables = dotenv.config();
 chai.use(chaiHttp);
-const url = "http://localhost:3000"
+
+//const url = "http://localhost:3000"
+const url = "http://".concat(process.env.APPHOST,":",process.env.APPPORT);
 
 var con = conectar.conectarConBD();
 
@@ -161,6 +163,7 @@ describe("Prueba DELETE: ", () => {
       .request(url)
       .get("/v1/prenda/obtener")
       .end(function(err, res) {
+        console.log(process.env.APPHOST);
         expect(res).to.have.status(200);
         done();
       });
