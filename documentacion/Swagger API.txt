@@ -1,1 +1,0 @@
-https://app.swaggerhub.com/apis/juliancarroccio4/crudPrendas/1.0.0#/prenda
