@@ -21,9 +21,7 @@ Aplicación para Android que escanea código de barras y muestra el producto y e
 (completar)
 
 # To Do List
-- Post
-- Put
-- Delete
+- Put y pruebas
+- Delete y pruebas
 - Actualizar Swagger
-- Pruebas con Mocha
-- Refactor código + comentar con parámetros
+- Refactor código

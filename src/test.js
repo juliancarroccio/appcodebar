@@ -134,15 +134,54 @@ describe("Prueba GET: ", () => {
 });
 
 describe("Prueba POST: ", () => {
-  it("Obtiene status 200 OK", done => {
+
+  it("ingreso de prenda exitoso", done => {
     chai
       .request(url)
-      .get("/v1/prenda/obtener")
+      .post("/v1/prenda/crear")
+      .send({"marca":2,"proveedor":3,"industria":2,"color":2,"talle":1,"familia":3,"codigoBarras":9118569,"nombre":"remera test","precio":890,"stock":3,"iva":1})
       .end(function(err, res) {
+        if (err) throw err;
+        con.query(
+          "SELECT * FROM producto WHERE codigoBarra = 9118569",
+          function(err, result, fields) {
+            if (err) throw err;
+            expect(result.length).to.equal(1);
+          }
+        );
         expect(res).to.have.status(200);
         done();
       });
   });
+
+  it("prenda ya existe", done => {
+    chai
+      .request(url)
+      .post("/v1/prenda/crear")
+      .send({"marca":2,"proveedor":3,"industria":2,"color":2,"talle":1,"familia":3,"codigoBarras":9118569,"nombre":"remera test","precio":890,"stock":3,"iva":1})
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property('mensaje').to.be.equal('La Prenda ya existe en el inventario.');
+        con.query("DELETE from producto WHERE codigoBarra = 9118569", function(err, result, fields) {
+          if (err) throw err;
+        });
+        done();
+      });
+  });
+
+  it("validación de parametro Marca", done => {
+    chai
+      .request(url)
+      .post("/v1/prenda/crear")
+      .send({"marca":"test","proveedor":3,"industria":2,"color":2,"talle":1,"familia":3,"codigoBarras":9118569,"nombre":"remera test","precio":890,"stock":3,"iva":1})
+      .end(function(err, res) {
+        if (err) throw err;
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
 });
 
 describe("Prueba PUT: ", () => {
