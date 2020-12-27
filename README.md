@@ -1,4 +1,4 @@
-# APP lectora de Codigo de Barras
+# APP lectora de Código de Barras
 Aplicación para Android que escanea código de barras y muestra el producto y el stock obtenido
 
 # Tecnologías a usar:
