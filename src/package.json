@@ -11,7 +11,7 @@
   "author": "Julian Carroccio",
   "license": "MIT",
   "dependencies": {
-    "ajv": "^6.11.0",
+    "ajv": "^6.12.3",
     "body-parser": "^1.19.0",
     "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
